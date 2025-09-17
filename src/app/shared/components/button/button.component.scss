@@ -1,0 +1,15 @@
+.btn-primary {
+  background-color: #3880ff; /* azul ionic */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #3171e0;
+}
