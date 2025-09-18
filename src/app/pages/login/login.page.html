@@ -1,22 +1,38 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>Login</ion-title>
+
+    <!-- Toggle Translate en el header -->
+    <ion-buttons slot="end">
+      <app-toggle-translate></app-toggle-translate>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div class="login-container">
-    <h2>Iniciar Sesión</h2>
 
-    <form>
-    
-    <ion-input type="email">Email</ion-input>
-    <ion-input type="password"> Password</ion-input>
+  <!-- Usamos el CardComponent para encerrar el formulario -->
+  <app-card>
+    <div class="login-container">
+      <h2>Sing Up</h2>
 
-      <div class="btn-container">
-        <!-- 👇 Aquí usas tu componente del Shared -->
-        <app-button>Entrar</app-button>
+      <form>
+        <!-- Usamos el InputComponent en lugar de ion-input -->
+        <app-input type="email" placeholder="Correo electrónico"></app-input>
+        <app-input type="password" placeholder="Contraseña"></app-input>
+
+        <div class="btn-container">
+          <!-- Botón de login -->
+          <app-button>Entrar</app-button>
+        </div>
+      </form>
+
+      <!-- LinkComponent -->
+      <div class="links-container">
+      <app-link [href]="'/register'" text="¿No tienes cuenta?"></app-link>
+
       </div>
-    </form>
-  </div>
+    </div>
+  </app-card>
+
 </ion-content>

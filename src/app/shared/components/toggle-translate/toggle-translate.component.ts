@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output  } from '@angular/core';
 
 @Component({
   standalone: false,
@@ -12,4 +12,13 @@ export class ToggleTranslateComponent  implements OnInit {
 
   ngOnInit() {}
 
+    isSpanish: boolean = true;
+
+  @Output() languageChange = new EventEmitter<string>();
+
+  toggleLanguage() {
+    this.isSpanish = !this.isSpanish;
+    this.languageChange.emit(this.isSpanish ? 'es' : 'en');
+  }
+  
 }

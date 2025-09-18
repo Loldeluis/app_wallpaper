@@ -1,14 +1,78 @@
+/* Centrar contenido verticalmente */
+ion-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #4e8ef7, #6ec6ff);
+  min-height: 100vh;
+}
+
+/* Contenedor principal del login */
 .login-container {
-  max-width: 400px;
-  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
   text-align: center;
 }
 
-.login-container h2 {
-  margin-bottom: 20px;
-  color: #222;
+/* Card del login */
+app-card {
+  display: block;
+  width: 100%;
+  max-width: 380px;
+  padding: 2rem;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
+/* Título */
+.login-container h2 {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #333;
+}
+
+/* Inputs */
+app-input {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* Botón */
 .btn-container {
-  margin-top: 20px;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+app-button {
+  display: block;
+  width: 100%;
+}
+
+/* Links */
+.links-container {
+  margin-top: 1rem;
+}
+
+app-link {
+  font-size: 0.9rem;
+  color: #4e8ef7;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+app-link:hover {
+  color: #2c6de9;
+  text-decoration: underline;
+}
+
+/* Floating button */
+app-floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 }
