@@ -1,8 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>{{ 'REGISTER.TITLE' | translate }}</ion-title>
-
-    <!-- Toggle Translate en el header -->
     <ion-buttons slot="end">
       <app-toggle-translate></app-toggle-translate>
     </ion-buttons>
@@ -10,30 +8,48 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-
-  <!-- Card para encerrar el formulario -->
   <app-card>
     <div class="register-container">
-     <h2>{{ 'REGISTER.SUBTITLE' | translate }}</h2>
+      <h2>{{ 'REGISTER.SUBTITLE' | translate }}</h2>
 
-      <form>
-        <!-- Inputs reutilizando tu componente -->
-        <app-input type="text" [placeholder]="'REGISTER.NAME' | translate"></app-input>
-        <app-input type="text" [placeholder]="'REGISTER.LASTNAME' | translate"></app-input>
-        <app-input type="email" [placeholder]="'REGISTER.EMAIL' | translate"></app-input>
-        <app-input type="password" [placeholder]="'REGISTER.PASSWORD' | translate"></app-input>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <app-input
+          formControlName="name"
+          placeholder="{{ 'REGISTER.NAME' | translate }}">
+        </app-input>
+
+        <app-input
+          formControlName="lastname"
+          placeholder="{{ 'REGISTER.LASTNAME' | translate }}">
+        </app-input>
+
+        <app-input
+          formControlName="email"
+          type="email"
+          placeholder="{{ 'REGISTER.EMAIL' | translate }}">
+        </app-input>
+
+        <app-input
+          formControlName="password"
+          type="password"
+          placeholder="{{ 'REGISTER.PASSWORD' | translate }}">
+        </app-input>
 
         <div class="btn-container">
-          <!-- Botón de registro -->
-        <app-button>{{ 'REGISTER.BUTTON' | translate }}</app-button>
+          <app-button
+            type="submit"
+            [disabled]="registerForm.invalid">
+            {{ 'REGISTER.BUTTON' | translate }}
+          </app-button>
         </div>
       </form>
 
-      <!-- Link para ir al login -->
       <div class="links-container">
-        <app-link [href]="'/login'" text="{{ 'REGISTER.HAVE_ACCOUNT' | translate }}"></app-link>
+        <app-link
+          [href]="'/login'"
+          text="{{ 'REGISTER.HAVE_ACCOUNT' | translate }}">
+        </app-link>
       </div>
     </div>
   </app-card>
-
 </ion-content>

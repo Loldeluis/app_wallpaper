@@ -15,5 +15,8 @@ export class ButtonComponent  implements OnInit {
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
   @Input() expand: 'block' | 'full' | 'outline' = 'block';
   @Input() color: string = 'primary';
+  
+  // 👇 Nuevo input para poder usar [disabled]
+  @Input() disabled: boolean = false;
 
 }
