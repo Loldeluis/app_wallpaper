@@ -1,5 +1,7 @@
-<label class="switch">
-  <input type="checkbox" (change)="toggleLanguage()" [checked]="isSpanish">
-  <span class="slider"></span>
-</label>
-<span>{{ isSpanish ? 'ES' : 'EN' }}</span>
+<ion-item lines="none">
+  <ion-label>{{ isSpanish ? 'ES' : 'EN' }}</ion-label>
+  <ion-toggle
+    [checked]="!isSpanish"
+    (ionChange)="toggleLang()">
+  </ion-toggle>
+</ion-item>

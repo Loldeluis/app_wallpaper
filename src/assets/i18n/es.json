@@ -1,0 +1,10 @@
+{
+  "LOGIN": {
+    "TITLE": "Iniciar sesion",
+    "EMAIL": "Correo",
+    "PASSWORD": "Contraseña",
+    "BUTTON": "Entrar",
+    "NO_ACCOUNT": "No tienes cuenta?",
+    "LANG_CHANGED": "Idioma cambiado a Español"
+  }
+}

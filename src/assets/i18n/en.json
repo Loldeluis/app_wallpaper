@@ -1,0 +1,10 @@
+{
+  "LOGIN": {
+    "TITLE": "Login",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "BUTTON": "Sign in",
+    "NO_ACCOUNT": "Don't have an account?",
+    "LANG_CHANGED": "Language changed to English"
+  }
+}
