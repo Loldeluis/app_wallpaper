@@ -1,0 +1,92 @@
+/* Fondo general */
+ion-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #6ec6ff, #4e8ef7);
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* Contenedor principal */
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+}
+
+/* Card donde va el formulario */
+app-card {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  animation: fadeInUp 0.6s ease both;
+}
+
+/* Título */
+.register-container h2 {
+  margin-bottom: 1rem;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #333;
+}
+
+/* Inputs */
+app-input {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* Botón */
+.btn-container {
+  margin-top: 1.2rem;
+  width: 100%;
+}
+
+app-button {
+  display: block;
+  width: 100%;
+}
+
+/* Links */
+.links-container {
+  margin-top: 1rem;
+}
+
+app-link {
+  font-size: 0.95rem;
+  color: #4e8ef7;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+app-link:hover {
+  color: #2c6de9;
+  text-decoration: underline;
+}
+
+/* Floating button */
+app-floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+/* Animación */
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
