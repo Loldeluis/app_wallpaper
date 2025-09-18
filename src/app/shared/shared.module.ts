@@ -6,19 +6,25 @@ import { ButtonModule } from './components/button/button.module';
 import { InputModule } from './components/input/input.module';
 import { ToggleTranslateModule } from './components/toggle-translate/toggle-translate.module';
 import { FloatingButtonModule } from './components/floating-button/floating-button.module';
+import { CardModule } from './components/card/card.module';
+import { LinkModule } from './components/link/link.module';
 @NgModule({
   imports: [
     CommonModule,
     ButtonModule,
     InputModule,
     ToggleTranslateModule,
-    FloatingButtonModule
+    FloatingButtonModule,
+    CardModule,
+    LinkModule
   ],
   exports: [
     ButtonModule,
     InputModule,
     ToggleTranslateModule,
-    FloatingButtonModule
+    FloatingButtonModule,
+    CardModule,
+    LinkModule
   ]
 })
 export class SharedModule {}
