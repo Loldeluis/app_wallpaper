@@ -8,6 +8,8 @@ import { ToggleTranslateModule } from './components/toggle-translate/toggle-tran
 import { FloatingButtonModule } from './components/floating-button/floating-button.module';
 import { CardModule } from './components/card/card.module';
 import { LinkModule } from './components/link/link.module';
+import { TranslateModule } from '@ngx-translate/core';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,7 +18,8 @@ import { LinkModule } from './components/link/link.module';
     ToggleTranslateModule,
     FloatingButtonModule,
     CardModule,
-    LinkModule
+    LinkModule,
+    TranslateModule
   ],
   exports: [
     ButtonModule,
@@ -24,7 +27,8 @@ import { LinkModule } from './components/link/link.module';
     ToggleTranslateModule,
     FloatingButtonModule,
     CardModule,
-    LinkModule
+    LinkModule,
+    TranslateModule
   ]
 })
 export class SharedModule {}

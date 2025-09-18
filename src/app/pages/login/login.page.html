@@ -14,22 +14,22 @@
   <!-- Usamos el CardComponent para encerrar el formulario -->
   <app-card>
     <div class="login-container">
-      <h2>Iniciar sesion</h2>
+      <h2>{{ 'LOGIN.TITLE' | translate }}</h2>
 
       <form>
         <!-- Usamos el InputComponent en lugar de ion-input -->
-        <app-input type="email" placeholder="Correo electrónico"></app-input>
-        <app-input type="password" placeholder="Contraseña"></app-input>
+      <app-input type="email" [placeholder]="'LOGIN.EMAIL' | translate"></app-input>
+      <app-input type="password" [placeholder]="'LOGIN.PASSWORD' | translate"></app-input>
 
         <div class="btn-container">
           <!-- Botón de login -->
-          <app-button>Entrar</app-button>
+          <app-button>{{ 'LOGIN.BUTTON' | translate }}</app-button>
         </div>
       </form>
 
       <!-- LinkComponent -->
       <div class="links-container">
-      <app-link [href]="'/register'" text="¿No tienes cuenta?"></app-link>
+       <app-link [href]="'/register'" text="{{ 'LOGIN.NO_ACCOUNT' | translate }}"></app-link>
 
       </div>
     </div>
