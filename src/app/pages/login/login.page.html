@@ -16,21 +16,33 @@
     <div class="login-container">
       <h2>{{ 'LOGIN.TITLE' | translate }}</h2>
 
-      <form>
+      <form (ngSubmit)="login()">
         <!-- Usamos el InputComponent en lugar de ion-input -->
-      <app-input type="email" [placeholder]="'LOGIN.EMAIL' | translate"></app-input>
-      <app-input type="password" [placeholder]="'LOGIN.PASSWORD' | translate"></app-input>
+        <app-input
+          type="email"
+          [placeholder]="'LOGIN.EMAIL' | translate"
+          [(ngModel)]="email"
+          name="email">
+        </app-input>
+
+        <app-input
+          type="password"
+          [placeholder]="'LOGIN.PASSWORD' | translate"
+          [(ngModel)]="password"
+          name="password">
+        </app-input>
 
         <div class="btn-container">
           <!-- Botón de login -->
-          <app-button>{{ 'LOGIN.BUTTON' | translate }}</app-button>
+          <app-button type="submit">
+            {{ 'LOGIN.BUTTON' | translate }}
+          </app-button>
         </div>
       </form>
 
       <!-- LinkComponent -->
       <div class="links-container">
-      <app-link [href]="'/register'" text="{{ 'LOGIN.NO_ACCOUNT' | translate }}"></app-link>
-
+        <app-link [href]="'/register'" text="{{ 'LOGIN.NO_ACCOUNT' | translate }}"></app-link>
       </div>
     </div>
   </app-card>

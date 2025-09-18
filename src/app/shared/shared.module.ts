@@ -10,6 +10,10 @@ import { CardModule } from './components/card/card.module';
 import { LinkModule } from './components/link/link.module';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -19,7 +23,10 @@ import { TranslateModule } from '@ngx-translate/core';
     FloatingButtonModule,
     CardModule,
     LinkModule,
-    TranslateModule
+    TranslateModule,
+    FormsModule,
+    ReactiveFormsModule,
+    IonicModule
   ],
   exports: [
     ButtonModule,
@@ -28,7 +35,10 @@ import { TranslateModule } from '@ngx-translate/core';
     FloatingButtonModule,
     CardModule,
     LinkModule,
-    TranslateModule
+    TranslateModule,
+    FormsModule,
+    ReactiveFormsModule,
+    IonicModule
   ]
 })
 export class SharedModule {}
