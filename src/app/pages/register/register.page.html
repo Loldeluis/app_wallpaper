@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Registro</ion-title>
+    <ion-title>{{ 'REGISTER.TITLE' | translate }}</ion-title>
 
     <!-- Toggle Translate en el header -->
     <ion-buttons slot="end">
@@ -14,28 +14,26 @@
   <!-- Card para encerrar el formulario -->
   <app-card>
     <div class="register-container">
-      <h2>Crea tu cuenta</h2>
+     <h2>{{ 'REGISTER.SUBTITLE' | translate }}</h2>
 
       <form>
         <!-- Inputs reutilizando tu componente -->
-        <app-input type="text" placeholder="Nombre completo"></app-input>
-        <app-input type="email" placeholder="Correo electrónico"></app-input>
-        <app-input type="password" placeholder="Contraseña"></app-input>
-        <app-input type="password" placeholder="Confirmar contraseña"></app-input>
+        <app-input type="text" [placeholder]="'REGISTER.NAME' | translate"></app-input>
+        <app-input type="text" [placeholder]="'REGISTER.LASTNAME' | translate"></app-input>
+        <app-input type="email" [placeholder]="'REGISTER.EMAIL' | translate"></app-input>
+        <app-input type="password" [placeholder]="'REGISTER.PASSWORD' | translate"></app-input>
 
         <div class="btn-container">
           <!-- Botón de registro -->
-          <app-button>Registrarse</app-button>
+        <app-button>{{ 'REGISTER.BUTTON' | translate }}</app-button>
         </div>
       </form>
 
       <!-- Link para ir al login -->
       <div class="links-container">
-        <app-link [href]="'/login'" text="¿Ya tienes cuenta? Inicia sesión"></app-link>
+        <app-link [href]="'/login'" text="{{ 'REGISTER.HAVE_ACCOUNT' | translate }}"></app-link>
       </div>
     </div>
   </app-card>
 
-  <!-- Floating Button (ejemplo: acceso a ayuda) -->
-  <app-floating-button icon="help-circle"></app-floating-button>
 </ion-content>

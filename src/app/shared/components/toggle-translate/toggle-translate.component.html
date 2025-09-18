@@ -2,6 +2,6 @@
   <ion-label>{{ isSpanish ? 'ES' : 'EN' }}</ion-label>
   <ion-toggle
     [checked]="!isSpanish"
-    (ionChange)="toggleLang()">
+    (ionChange)="onToggle($event)">
   </ion-toggle>
 </ion-item>

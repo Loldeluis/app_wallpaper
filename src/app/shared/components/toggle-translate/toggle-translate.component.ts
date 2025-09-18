@@ -22,17 +22,19 @@ export class ToggleTranslateComponent {
     return this.currentLang === 'es';
   }
 
-  async toggleLang() {
-    this.currentLang = this.currentLang === 'es' ? 'en' : 'es';
-    this.translate.use(this.currentLang);
+async onToggle(event: any) {
+  const checked = event.detail.checked;
+  const newLang = checked ? 'en' : 'es';
 
-    const msg = this.translate.instant('LOGIN.LANG_CHANGED');
-    const toast = await this.toastCtrl.create({
-      message: msg,
-      duration: 2000,
-      position: 'top',
-      color: 'primary'
-    });
-    await toast.present();
-  }
+  this.translate.use(newLang);
+
+  const msg = this.translate.instant('SYSTEM.LANG_CHANGED');
+  const toast = await this.toastCtrl.create({
+    message: msg,
+    duration: 2000,
+    position: 'top',
+    color: 'primary'
+  });
+  await toast.present();
+}
 }

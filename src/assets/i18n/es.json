@@ -1,10 +1,22 @@
 {
+  "SYSTEM": {
+    "LANG_CHANGED": "Idioma cambiado a Español"
+  },
   "LOGIN": {
-    "TITLE": "Iniciar sesion",
+    "TITLE": "Iniciar sesión",
     "EMAIL": "Correo",
     "PASSWORD": "Contraseña",
     "BUTTON": "Entrar",
-    "NO_ACCOUNT": "No tienes cuenta?",
-    "LANG_CHANGED": "Idioma cambiado a Español"
+    "NO_ACCOUNT": "¿No tienes cuenta?"
+  },
+  "REGISTER": {
+    "TITLE": "Registro",
+    "SUBTITLE": "Crea tu cuenta",
+    "NAME": "Nombre",
+    "LASTNAME": "Apellido",
+    "EMAIL": "Correo electrónico",
+    "PASSWORD": "Contraseña",
+    "BUTTON": "Registrarse",
+    "HAVE_ACCOUNT": "¿Ya tienes cuenta? Inicia sesión"
   }
 }

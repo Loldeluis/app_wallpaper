@@ -1,10 +1,22 @@
 {
+  "SYSTEM": {
+    "LANG_CHANGED": "Language changed to English"
+  },
   "LOGIN": {
     "TITLE": "Login",
     "EMAIL": "Email",
     "PASSWORD": "Password",
     "BUTTON": "Sign in",
-    "NO_ACCOUNT": "Don't have an account?",
-    "LANG_CHANGED": "Language changed to English"
+    "NO_ACCOUNT": "Don't have an account?"
+  },
+  "REGISTER": {
+    "TITLE": "Register",
+    "SUBTITLE": "Create your account",
+    "NAME": "Name",
+    "LASTNAME": "Last name",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "BUTTON": "Sign up",
+    "HAVE_ACCOUNT": "Already have an account? Log in"
   }
 }

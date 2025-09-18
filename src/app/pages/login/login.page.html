@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Login</ion-title>
+    <ion-title>{{ 'LOGIN.TITLE' | translate }}</ion-title>
 
     <!-- Toggle Translate en el header -->
     <ion-buttons slot="end">
@@ -29,7 +29,7 @@
 
       <!-- LinkComponent -->
       <div class="links-container">
-       <app-link [href]="'/register'" text="{{ 'LOGIN.NO_ACCOUNT' | translate }}"></app-link>
+      <app-link [href]="'/register'" text="{{ 'LOGIN.NO_ACCOUNT' | translate }}"></app-link>
 
       </div>
     </div>
