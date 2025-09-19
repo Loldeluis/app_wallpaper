@@ -1,0 +1,31 @@
+:host {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.fab-container {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse; /* hace que los botones salgan hacia arriba */
+  align-items: center;
+}
+
+/* Opciones flotantes ocultas inicialmente */
+.fab-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+  opacity: 0;
+  transform: translateY(0);
+  pointer-events: none;
+}
+
+/* Cuando está abierto, se despliega */
+.fab-options.open {
+  opacity: 1;
+  transform: translateY(-70px); /* sube el botón */
+  pointer-events: auto;
+}

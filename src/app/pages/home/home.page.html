@@ -13,6 +13,9 @@
     <p>No hay usuario autenticado</p>
   </ng-template>
 
+<!-- Botón flotante con opción logout -->
+<app-floating-button (logoutClick)="logout()"></app-floating-button>
+
   <ion-button color="danger" (click)="logout()">
     Logout
   </ion-button>

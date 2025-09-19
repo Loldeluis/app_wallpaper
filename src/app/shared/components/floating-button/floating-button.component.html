@@ -1,3 +1,14 @@
-<button class="floating-btn">
-  {{ icon }}
-</button>
+<div class="fab-container">
+  <!-- Botón principal -->
+  <ion-fab-button (click)="toggleMenu()">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+
+  <!-- Botón secundario (logout) -->
+  <!-- Botón secundario (logout) -->
+  <div class="fab-options" [class.open]="isOpen">
+    <ion-fab-button color="danger" (click)="onLogoutClick()">
+      <ion-icon name="log-out-outline"></ion-icon>
+    </ion-fab-button>
+  </div>
+</div>
