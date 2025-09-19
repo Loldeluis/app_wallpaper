@@ -1,13 +1,23 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>profile</ion-title>
+    <ion-title>Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+    <ion-item>
+      <ion-label position="floating">Nuevo nombre</ion-label>
+      <ion-input type="text" formControlName="displayName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Nueva contraseña</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" [disabled]="profileForm.invalid">
+      Actualizar Perfil
+    </ion-button>
+  </form>
 </ion-content>

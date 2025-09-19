@@ -25,8 +25,7 @@ export class HomePage implements OnInit {
   }
 
   goToProfile() {
-  console.log('Ir a actualizar perfil (pendiente implementar)');
-  // Más adelante aquí haces this.router.navigate(['/profile']);
+    this.router.navigateByUrl('/profile', { replaceUrl: true });
 }
 
 }
