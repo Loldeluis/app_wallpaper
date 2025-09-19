@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth';
 import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router'; 
 
 @Component({
   standalone: false,
@@ -14,7 +15,8 @@ export class LoginPage {
 
   constructor(
     private authService: AuthService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private router: Router 
   ) {}
 
   async login() {
@@ -26,6 +28,11 @@ export class LoginPage {
         color: 'success'
       });
       toast.present();
+
+            // ◀ redirige al home y reemplaza el historial
+      this.router.navigateByUrl('/home', { replaceUrl: true });
+
+      
     } catch (err: any) {
       const toast = await this.toastCtrl.create({
         message: err.message,
