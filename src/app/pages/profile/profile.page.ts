@@ -35,7 +35,7 @@ export class ProfilePage implements OnInit {
       }
 
       if (password) {
-        await this.authService.updatePassword(password);
+        await this.authService.updateUserPassword(password);
         this.showToast('Contraseña actualizada con éxito');
       }
 

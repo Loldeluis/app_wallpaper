@@ -10,12 +10,13 @@ import { AuthService } from '../services/auth';
 export class AuthGuard implements CanActivate {
 
   constructor(
-    private authService: AuthService,
+    private authservie: AuthService,
     private router: Router
   ) {}
 
+
   canActivate(): Observable<boolean | UrlTree> {
-    return this.authService.currentUser$.pipe(
+    return this.authservie.user$.pipe(
       take(1), // solo necesitamos un valor
       map(user => {
         if (user) {

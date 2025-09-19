@@ -31,41 +31,38 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  async onSubmit() {
-    if (this.registerForm.invalid) return;
+async onSubmit() {
+  if (this.registerForm.invalid) return;
 
-    const { name, lastname, email, password } = this.registerForm.value;
+  const { name, lastname, email, password } = this.registerForm.value;
 
-    const loading = await this.loadingCtrl.create({
-      message: 'Registrando usuario…'
+  const loading = await this.loadingCtrl.create({
+    message: 'Registrando usuario…'
+  });
+  await loading.present();
+
+  try {
+    const cred = await this.auth.register(email, password, name, lastname);
+
+    await loading.dismiss();
+    const toast = await this.toastCtrl.create({
+      message: 'Registro exitoso. Verifica tu correo.',
+      color: 'success',
+      duration: 2000
     });
-    await loading.present();
+    await toast.present();
 
-    try {
-      const cred = await this.auth.register(email, password);
-    if (cred.user) {
-    await cred.user.updateProfile({
-    displayName: `${name} ${lastname}`
-      });
-        }
-
-      await loading.dismiss();
-      const toast = await this.toastCtrl.create({
-        message: 'Registro exitoso. Verifica tu correo.',
-        color: 'success',
-        duration: 2000
-      });
-      await toast.present();
-      this.router.navigateByUrl('/login');
-    } catch (err: any) {
-      await loading.dismiss();
-      const toast = await this.toastCtrl.create({
-        message: err.message || 'Error al registrar',
-        color: 'danger',
-        duration: 3000
-      });
-      await toast.present();
-      console.error('Registro fallido:', err);
-    }
+    this.router.navigateByUrl('/login');
+  } catch (err: any) {
+    await loading.dismiss();
+    const toast = await this.toastCtrl.create({
+      message: err.message || 'Error al registrar',
+      color: 'danger',
+      duration: 3000
+    });
+    await toast.present();
+    console.error('Registro fallido:', err);
   }
+}
+
 }

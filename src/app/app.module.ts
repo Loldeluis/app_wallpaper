@@ -11,9 +11,12 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core.module';
 
-//firebase
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+
+
+// Modular Firebase
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 
 // Loader factory
@@ -35,11 +38,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }), CoreModule,
-      AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule,
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore())
   ],
   bootstrap: [AppComponent],
 })
