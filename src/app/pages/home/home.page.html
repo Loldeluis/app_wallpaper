@@ -14,7 +14,10 @@
   </ng-template>
 
 <!-- Botón flotante con opción logout -->
-<app-floating-button (logoutClick)="logout()"></app-floating-button>
+<app-floating-button 
+(logoutClick)="logout()"
+(profileClick)="goToProfile()">
+</app-floating-button>
 
   <ion-button color="danger" (click)="logout()">
     Logout

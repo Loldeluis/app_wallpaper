@@ -1,0 +1,32 @@
+.fab-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.fab-options {
+  position: absolute;
+  bottom: 60px; /* empieza justo arriba del fab principal */
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  /* Oculto por defecto */
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+
+  transition: all 0.3s ease-in-out;
+}
+
+.fab-options.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+ion-fab-button {
+  --border-radius: 50%;
+  margin-top: 5px; /* espacio entre botones */
+}

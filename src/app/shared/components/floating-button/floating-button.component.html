@@ -5,10 +5,14 @@
   </ion-fab-button>
 
   <!-- Botón secundario (logout) -->
-  <!-- Botón secundario (logout) -->
   <div class="fab-options" [class.open]="isOpen">
     <ion-fab-button color="danger" (click)="onLogoutClick()">
       <ion-icon name="log-out-outline"></ion-icon>
+    </ion-fab-button>
+
+      <!-- Botón de Actualizar Perfil -->
+    <ion-fab-button color="primary" (click)="onProfileClick()">
+    <ion-icon name="person-circle-outline"></ion-icon>
     </ion-fab-button>
   </div>
 </div>

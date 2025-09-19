@@ -9,15 +9,24 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class FloatingButtonComponent {
     isOpen = false;
 
- @Output() logoutClick = new EventEmitter<void>();
+  @Output() logoutClick = new EventEmitter<void>();
+  @Output() profileClick = new EventEmitter<void>();
+
   toggleMenu() {
     this.isOpen = !this.isOpen;
   }
-  
+
     onLogoutClick() {
     this.logoutClick.emit();
     this.isOpen = false; // opcional, cerrar menú después
   }
+
+    onProfileClick() {
+    this.profileClick.emit();
+    this.isOpen = false;
+  }
+
+  
   @Input() icon: string = '+';  // Texto o icono
  
 }

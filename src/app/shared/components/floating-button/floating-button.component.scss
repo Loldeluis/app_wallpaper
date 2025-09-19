@@ -1,31 +1,53 @@
-:host {
+.fab-container {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  z-index: 1000;
 }
 
-.fab-container {
-  position: relative;
-  display: flex;
-  flex-direction: column-reverse; /* hace que los botones salgan hacia arriba */
-  align-items: center;
-}
-
-/* Opciones flotantes ocultas inicialmente */
 .fab-options {
+  position: absolute;
+  bottom: 60px; /* empieza justo arriba del fab principal */
+  right: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  transition: all 0.3s ease-in-out;
+  align-items: flex-end;
+
+  /* Oculto por defecto */
   opacity: 0;
-  transform: translateY(0);
+  transform: translateY(20px);
   pointer-events: none;
+
+  transition: all 0.3s ease-in-out;
 }
 
-/* Cuando está abierto, se despliega */
+ion-fab-button { --border-radius: 50%; margin-top: 5px; /* espacio entre botones */ }
+
 .fab-options.open {
   opacity: 1;
-  transform: translateY(-70px); /* sube el botón */
+  transform: translateY(0);
   pointer-events: auto;
 }
+
+/* Añadimos delays escalonados */
+.fab-options ion-fab-button {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease-in-out;
+}
+
+.fab-options.open ion-fab-button {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Primer botón (aparece primero) */
+.fab-options.open ion-fab-button:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+/* Segundo botón (aparece después) */
+.fab-options.open ion-fab-button:nth-child(2) {
+  transition-delay: 0.2s;
+}
+
+/* Si agregas más, solo sigues aumentando el delay */
