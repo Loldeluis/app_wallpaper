@@ -9,6 +9,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class FloatingButtonComponent {
     isOpen = false;
 
+ @Input() imageSrc: string = ''; // Ruta de la imagen principal
   @Output() logoutClick = new EventEmitter<void>();
   @Output() profileClick = new EventEmitter<void>();
 
@@ -26,7 +27,7 @@ export class FloatingButtonComponent {
     this.isOpen = false;
   }
 
-  
+
   @Input() icon: string = '+';  // Texto o icono
  
 }

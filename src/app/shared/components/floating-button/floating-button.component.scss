@@ -20,7 +20,11 @@
   transition: all 0.3s ease-in-out;
 }
 
-ion-fab-button { --border-radius: 50%; margin-top: 5px; /* espacio entre botones */ }
+ion-fab-button {
+    --border-radius: 50%; 
+    margin-top: 5px; 
+     /* espacio entre botones */ 
+    }
 
 .fab-options.open {
   opacity: 1;
@@ -48,6 +52,11 @@ ion-fab-button { --border-radius: 50%; margin-top: 5px; /* espacio entre botones
 /* Segundo botón (aparece después) */
 .fab-options.open ion-fab-button:nth-child(2) {
   transition-delay: 0.2s;
+}
+
+/* Tercer botón (aparece después) */
+.fab-options.open ion-fab-button:nth-child(3) {
+  transition-delay: 0.3s;
 }
 
 /* Si agregas más, solo sigues aumentando el delay */
