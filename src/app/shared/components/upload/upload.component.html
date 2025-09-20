@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Subir Imágenes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Botón para abrir galería -->
+  <input
+    type="file"
+    (change)="onFileSelected($event)"
+    accept="image/*"
+    multiple
+    hidden
+    #fileInput
+  />
+  <ion-button expand="block" (click)="fileInput.click()">
+    Seleccionar imágenes
+  </ion-button>
+
+  <!-- Vista previa -->
+  <div class="preview-container">
+    <img *ngFor="let img of images" [src]="img" alt="imagen subida" />
+  </div>
+</ion-content>

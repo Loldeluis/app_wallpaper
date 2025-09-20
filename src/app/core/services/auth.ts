@@ -1,7 +1,5 @@
 // src/app/core/services/auth.ts
 import { Injectable } from '@angular/core';
-
-// modular auth functions
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -9,16 +7,12 @@ import {
   signOut,
   user as userObservable
 } from '@angular/fire/auth';
-
-// functions from firebase/auth for updates/reauth
 import {
   updateProfile,
   reauthenticateWithCredential,
   EmailAuthProvider,
   updatePassword
 } from 'firebase/auth';
-
-// modular firestore functions
 import {
   Firestore,
   doc,
@@ -27,8 +21,8 @@ import {
   updateDoc,
   serverTimestamp
 } from '@angular/fire/firestore';
-
 import { Observable } from 'rxjs';
+import { SupabaseService } from './supabase.service';
 
 @Injectable({
   providedIn: 'root'
@@ -38,57 +32,98 @@ export class AuthService {
 
   constructor(
     private auth: Auth,
-    private firestore: Firestore
+    private firestore: Firestore,
+    private supabase: SupabaseService,
   ) {
-    // helper that returns Observable<User | null>
     this.user$ = userObservable(this.auth);
   }
 
-  // Alias por compatibilidad (opcional)
-  public get currentUser$() {
+  /** Alias para compatibilidad */
+  public get currentUser$(): Observable<any> {
     return this.user$;
   }
 
   // ----------------------
-  // Registro (Auth + Firestore)
+  // Registro de usuario
   // ----------------------
   async register(email: string, password: string, name: string, lastname: string) {
-    const cred = await createUserWithEmailAndPassword(this.auth, email, password);
+  console.log('🔹 [AuthService] Registrando en Firebase...');
+  const cred = await createUserWithEmailAndPassword(this.auth, email, password);
+  console.log('✅ Firebase OK', cred.user.uid);
 
-    if (cred.user) {
-      const uid = cred.user.uid;
+  if (cred.user) {
+    const uid = cred.user.uid;
 
-      // Guardar perfil en Firestore (modular)
-      await setDoc(doc(this.firestore, 'users', uid), {
-        uid,
-        email,
-        name,
-        lastname,
-        createdAt: serverTimestamp()
-      });
+    console.log('🔹 Guardando perfil en Firestore...');
+    await setDoc(doc(this.firestore, 'users', uid), {
+      uid,
+      email,
+      name,
+      lastname,
+      createdAt: serverTimestamp()
+    });
 
-      // Actualizar displayName en Auth
-      await updateProfile(cred.user, { displayName: `${name} ${lastname}` });
+    console.log('🔹 Actualizando displayName en Firebase Auth...');
+    await updateProfile(cred.user, { displayName: `${name} ${lastname}` });
+
+    // 🔹 Espera breve para evitar lock de Supabase
+    await new Promise(res => setTimeout(res, 300));
+
+    console.log('🔹 Registrando en Supabase...');
+    const { data: signUpData, error: signUpErr } = await this.supabase.client.auth.signUp({ email, password });
+    console.log('📄 Respuesta signUp Supabase:', signUpData, signUpErr);
+
+    if (signUpErr) {
+      if (/already/i.test(signUpErr.message)) {
+        console.warn('⚠️ Usuario ya existe en Supabase, intentando login...');
+      } else {
+        throw signUpErr;
+      }
     }
 
-    return cred;
+    console.log('🔹 Iniciando sesión en Supabase...');
+    const { data: signInData, error: signInErr } = await this.supabase.client.auth.signInWithPassword({ email, password });
+    console.log('📄 Respuesta signIn Supabase:', signInData, signInErr);
+
+    if (signInErr) {
+      throw signInErr;
+    }
+
+    console.log('✅ Registro completo en Firebase y Supabase');
   }
+
+  return cred;
+}
+
 
   // ----------------------
   // Login / Logout
   // ----------------------
-  login(email: string, password: string) {
-    return signInWithEmailAndPassword(this.auth, email, password);
+  async login(email: string, password: string) {
+    // 1) Firebase
+    await signInWithEmailAndPassword(this.auth, email, password);
+
+    // 2) Supabase
+    const { error } = await this.supabase.client.auth.signInWithPassword({ email, password });
+    if (error) {
+      throw error;
+    }
   }
 
-  logout() {
-    return signOut(this.auth);
+  async logout() {
+    // 1) Firebase
+    await signOut(this.auth);
+
+    // 2) Supabase
+    const { error } = await this.supabase.client.auth.signOut();
+    if (error) {
+      throw error;
+    }
   }
 
   // ----------------------
   // Firestore helpers
   // ----------------------
-  // Obtener documento del usuario (una sola vez)
   async getUserDocOnce(uid: string) {
     const snap = await getDoc(doc(this.firestore, 'users', uid));
     return snap.exists() ? snap.data() : null;
@@ -97,28 +132,34 @@ export class AuthService {
   // ----------------------
   // Actualizaciones seguras
   // ----------------------
-  // Actualizar displayName en Auth y tambien en Firestore
   async updateDisplayName(name: string): Promise<void> {
-    const current = await this.auth.currentUser;
-    if (!current) throw new Error('No hay usuario autenticado');
+    const current = this.auth.currentUser;
+    if (!current) {
+      throw new Error('No hay usuario autenticado');
+    }
+
+    // Firebase Auth
     await updateProfile(current, { displayName: name });
 
-    // actualizar campo name en Firestore (opcional)
+    // Firestore
     await updateDoc(doc(this.firestore, 'users', current.uid), { name });
   }
 
-  // Reautenticación: requiere contraseña actual
   async reauthenticate(currentPassword: string): Promise<void> {
-    const current = await this.auth.currentUser;
-    if (!current || !current.email) throw new Error('No hay usuario autenticado');
+    const current = this.auth.currentUser;
+    if (!current || !current.email) {
+      throw new Error('No hay usuario autenticado');
+    }
+
     const credential = EmailAuthProvider.credential(current.email, currentPassword);
     await reauthenticateWithCredential(current, credential);
   }
 
-  // Actualizar contraseña (debe reautenticarse si Firebase lo exige)
   async updateUserPassword(newPassword: string): Promise<void> {
-    const current = await this.auth.currentUser;
-    if (!current) throw new Error('No hay usuario autenticado');
+    const current = this.auth.currentUser;
+    if (!current) {
+      throw new Error('No hay usuario autenticado');
+    }
     await updatePassword(current, newPassword);
   }
 }

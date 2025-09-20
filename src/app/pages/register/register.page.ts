@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth';
 import { Router } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
-import { updateProfile } from 'firebase/auth';
+import { SupabaseService } from 'src/app/core/services/supabase.service';
 
 @Component({
   standalone: false,
@@ -19,7 +19,8 @@ export class RegisterPage implements OnInit {
     private auth: AuthService,
     private router: Router,
     private loadingCtrl: LoadingController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private supabase: SupabaseService,
   ) {}
 
   ngOnInit() {
@@ -46,7 +47,7 @@ async onSubmit() {
 
     await loading.dismiss();
     const toast = await this.toastCtrl.create({
-      message: 'Registro exitoso. Verifica tu correo.',
+      message: 'Registro exitoso.',
       color: 'success',
       duration: 2000
     });
