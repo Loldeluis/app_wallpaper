@@ -10,13 +10,14 @@
 
       <!-- Botón de Actualizar Perfil -->
     <ion-fab-button color="primary" (click)="onProfileClick()">
-    <ion-icon name="person-circle-outline"></ion-icon>
+      <ion-icon name="person-circle-outline"></ion-icon>
     </ion-fab-button>
     
-     <!-- Botón con imagen -->
-    <ion-fab-button color="primary" (click)="onProfileClick()">
-    <ion-icon name="images-outline"></ion-icon>
+      <!-- Botón para subir imágenes -->
+    <ion-fab-button color="secondary" (click)="onUploadImageClick()">
+      <ion-icon name="images-outline"></ion-icon>
     </ion-fab-button>
+
 
       <!-- Botón (logout) -->
     <ion-fab-button color="danger" (click)="onLogoutClick()">

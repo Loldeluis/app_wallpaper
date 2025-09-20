@@ -10,6 +10,7 @@ export class FloatingButtonComponent {
     isOpen = false;
 
  @Input() imageSrc: string = ''; // Ruta de la imagen principal
+ @Output() uploadImageClick = new EventEmitter<void>();
   @Output() logoutClick = new EventEmitter<void>();
   @Output() profileClick = new EventEmitter<void>();
 
@@ -26,6 +27,11 @@ export class FloatingButtonComponent {
     this.profileClick.emit();
     this.isOpen = false;
   }
+
+  onUploadImageClick() {
+  this.uploadImageClick.emit();
+  this.isOpen = false;
+}
 
 
   @Input() icon: string = '+';  // Texto o icono

@@ -10,14 +10,12 @@ export class SupabaseService {
     this.supabase = createClient(
       environment.supabase.supabaseUrl,
       environment.supabase.supabaseKey,
-        {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      
-    }
-  }
-
+      {
+        auth: {
+          persistSession: false, // evita locks en desarrollo
+          autoRefreshToken: true,
+        }
+      }
     );
   }
 
@@ -25,38 +23,58 @@ export class SupabaseService {
     return this.supabase;
   }
 
+  /** Obtiene el ID del usuario autenticado en Supabase o lanza error */
   async getSupabaseUserIdOrThrow() {
     const { data: { user }, error } = await this.supabase.auth.getUser();
-    if (error || !user) throw new Error('No hay sesión en Supabase');
+    if (error || !user) {
+      console.error('❌ No hay sesión activa en Supabase:', error?.message);
+      throw new Error('No hay sesión en Supabase');
+    }
     return user.id;
   }
 
+  /** Sube un archivo al bucket wallpapers en la carpeta del usuario */
   async uploadWallpaper(file: File) {
     const userId = await this.getSupabaseUserIdOrThrow();
 
     const safeName = file.name
       .replace(/\s+/g, '_')
       .replace(/[^a-zA-Z0-9._-]/g, '');
+
     const filePath = `${userId}/${Date.now()}-${safeName}`;
+
+    console.log(`🔹 Subiendo archivo a Supabase: ${filePath}`);
 
     const { error } = await this.supabase
       .storage
       .from('wallpapers')
       .upload(filePath, file, { upsert: false });
 
-    if (error) throw error;
+    if (error) {
+      console.error('❌ Error al subir a Supabase:', error.message);
+      throw error;
+    }
+
+    console.log('✅ Archivo subido correctamente');
     return filePath;
   }
 
+  /** Obtiene una URL firmada para un archivo */
   async getSignedUrl(filePath: string) {
     const { data, error } = await this.supabase
       .storage
       .from('wallpapers')
-      .createSignedUrl(filePath, 60 * 60);
-    if (error) throw error;
+      .createSignedUrl(filePath, 60 * 60); // 1 hora
+
+    if (error) {
+      console.error('❌ Error al generar URL firmada:', error.message);
+      throw error;
+    }
+
     return data.signedUrl;
   }
 
+  /** Lista los archivos del usuario con sus URLs firmadas */
   async listMyWallpapersWithUrls() {
     const userId = await this.getSupabaseUserIdOrThrow();
 
@@ -65,7 +83,10 @@ export class SupabaseService {
       .from('wallpapers')
       .list(userId, { sortBy: { column: 'created_at', order: 'desc' } });
 
-    if (error) throw error;
+    if (error) {
+      console.error('❌ Error al listar wallpapers:', error.message);
+      throw error;
+    }
 
     return Promise.all(
       (data ?? []).map(async (file) => {

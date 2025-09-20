@@ -6,10 +6,16 @@
 
 <ion-content class="ion-padding">
 
-</ion-content>
+  <!-- Botón flotante -->
+  <app-floating-button
+    (logoutClick)="logout()"
+    (profileClick)="goToProfile()"
+    (uploadImageClick)="onUploadImage()">
+  </app-floating-button>
 
-<!-- Botón flotante con opción logout -->
-<app-floating-button 
-  (logoutClick)="logout()"
-  (profileClick)="goToProfile()">
-</app-floating-button>
+  <!-- Vista previa de imágenes -->
+  <div class="preview-container">
+    <img *ngFor="let img of images" [src]="img" alt="imagen subida" />
+  </div>
+
+</ion-content>
