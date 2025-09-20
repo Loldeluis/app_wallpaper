@@ -34,30 +34,42 @@ export class SupabaseService {
   }
 
   /** Sube un archivo al bucket wallpapers en la carpeta del usuario */
-  async uploadWallpaper(file: File) {
-    const userId = await this.getSupabaseUserIdOrThrow();
+ async uploadWallpaper(file: File) {
+  const userId = await this.getSupabaseUserIdOrThrow();
 
-    const safeName = file.name
-      .replace(/\s+/g, '_')
-      .replace(/[^a-zA-Z0-9._-]/g, '');
+  const safeName = file.name
+    .replace(/\s+/g, '_')
+    .replace(/[^a-zA-Z0-9._-]/g, '');
 
-    const filePath = `${userId}/${Date.now()}-${safeName}`;
+  const filePath = `${userId}/${Date.now()}-${safeName}`;
 
-    console.log(`🔹 Subiendo archivo a Supabase: ${filePath}`);
+  console.log(`🔹 Subiendo archivo a Supabase: ${filePath}`);
 
-    const { error } = await this.supabase
-      .storage
-      .from('wallpapers')
-      .upload(filePath, file, { upsert: false });
+  const { error } = await this.supabase
+    .storage
+    .from('wallpapers')
+    .upload(filePath, file, { upsert: false });
 
-    if (error) {
-      console.error('❌ Error al subir a Supabase:', error.message);
-      throw error;
-    }
-
-    console.log('✅ Archivo subido correctamente');
-    return filePath;
+  if (error) {
+    console.error('❌ Error al subir a Supabase:', error.message);
+    throw error;
   }
+
+  console.log('✅ Archivo subido correctamente');
+
+  // 🔹 Generar URL firmada inmediatamente
+  const { data: signedData, error: signedErr } = await this.supabase
+    .storage
+    .from('wallpapers')
+    .createSignedUrl(filePath, 60 * 60); // 1 hora
+
+  if (signedErr) {
+    console.error('❌ Error al generar URL firmada:', signedErr.message);
+    throw signedErr;
+  }
+
+  return signedData.signedUrl; // devolvemos la URL lista para <img>
+}
 
   /** Obtiene una URL firmada para un archivo */
   async getSignedUrl(filePath: string) {
