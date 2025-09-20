@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth';// ajusta ruta si es necesario
 import { SupabaseService } from 'src/app/core/services/supabase.service';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   standalone: false,
@@ -47,31 +48,35 @@ export class HomePage implements OnInit {
     this.router.navigateByUrl('/profile');
   }
 
- async onUploadImage() {
-  const input = document.createElement('input');
-  input.type = 'file';
-  input.accept = 'image/*';
-  input.multiple = true;
+ // 📸 Subir imagen desde galería o cámara
+  async onUploadImage() {
+    try {
+      const image = await Camera.getPhoto({
+        quality: 80,
+        resultType: CameraResultType.Base64, // obtenemos base64
+        source: CameraSource.Prompt, // prompt: permite elegir cámara o galería
+      });
 
-  input.onchange = async (ev: any) => {
-    const files: FileList = ev.target.files;
-    if (!files || files.length === 0) return;
+      if (image && image.base64String) {
+        // Convertir base64 a File
+        const byteCharacters = atob(image.base64String);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const file = new File([byteArray], `wallpaper-${Date.now()}.jpg`, { type: 'image/jpeg' });
 
-    this.uploading = true;
-
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      await this.supabaseService.uploadWallpaper(file);
+        this.uploading = true;
+        await this.supabaseService.uploadWallpaper(file);
+        // 🔄 refrescar lista
+        this.wallpapers = await this.authService.getMyWallpapers();
+        this.uploading = false;
+      }
+    } catch (err) {
+      console.error('❌ Error al capturar o subir imagen:', err);
     }
-
-    // ✅ Cuando termine de subir, refrescamos wallpapers desde la BD
-    this.wallpapers = await this.authService.getMyWallpapers();
-
-    this.uploading = false;
-  };
-
-  input.click();
-}
+  }
 
 
 }
