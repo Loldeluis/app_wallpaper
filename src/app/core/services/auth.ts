@@ -108,7 +108,14 @@ export class AuthService {
     if (error) {
       throw error;
     }
+
+    
+  // 3) Cargar wallpapers del usuario
+  const wallpapers = await this.supabase.listMyWallpapersWithUrls();
+  console.log('🖼 Wallpapers del usuario:', wallpapers);
+  return wallpapers; // ya los puedes devolver al componente
   }
+
 
   async logout() {
     // 1) Firebase
@@ -162,4 +169,12 @@ export class AuthService {
     }
     await updatePassword(current, newPassword);
   }
+
+    // ----------------------
+  // Wallpapers
+  // ----------------------
+  async getMyWallpapers() {
+    return this.supabase.listMyWallpapersWithUrls();
+  }
+  
 }

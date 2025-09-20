@@ -13,7 +13,7 @@ import { SupabaseService } from 'src/app/core/services/supabase.service';
 })
 export class HomePage implements OnInit {
   user$: Observable<any>; // observable del usuario autenticado
-  images: string[] = [];
+  wallpapers: any[] = [];
   uploading = false;
 
   constructor(
@@ -24,7 +24,17 @@ export class HomePage implements OnInit {
     this.user$ = this.authService.user$;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+        // Apenas entra al Home, cargamos wallpapers del usuario
+    this.user$.subscribe(async user => {
+      if (user) {
+        this.wallpapers = await this.authService.getMyWallpapers();
+        console.log('🖼 Wallpapers cargados:', this.wallpapers);
+      } else {
+        this.wallpapers = [];
+      }
+    });
+  }
 
   // logout ya lo tenías; usa el método modular
   logout() {
@@ -37,7 +47,7 @@ export class HomePage implements OnInit {
     this.router.navigateByUrl('/profile');
   }
 
-   async onUploadImage() {
+ async onUploadImage() {
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = 'image/*';
@@ -48,11 +58,15 @@ export class HomePage implements OnInit {
     if (!files || files.length === 0) return;
 
     this.uploading = true;
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const url = await this.supabaseService.uploadWallpaper(file);
-      if (url) this.images.unshift(url); // mostrar al inicio
+      await this.supabaseService.uploadWallpaper(file);
     }
+
+    // ✅ Cuando termine de subir, refrescamos wallpapers desde la BD
+    this.wallpapers = await this.authService.getMyWallpapers();
+
     this.uploading = false;
   };
 

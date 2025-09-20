@@ -13,9 +13,20 @@
     (uploadImageClick)="onUploadImage()">
   </app-floating-button>
 
-  <!-- Vista previa de imágenes -->
-  <div class="preview-container">
-    <img *ngFor="let img of images" [src]="img" alt="imagen subida" />
+  <!-- Si no hay wallpapers -->
+  <div *ngIf="wallpapers.length === 0" class="empty">
+    <p>No hay wallpapers disponibles</p>
   </div>
+
+<!-- Grid de wallpapers -->
+<ion-grid *ngIf="wallpapers.length > 0">
+  <ion-row>
+    <ion-col size="6" *ngFor="let wp of wallpapers">
+      <ion-card class="wallpaper-card">
+       <img *ngIf="wp.url" [src]="wp.url" alt="" />
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
 
 </ion-content>
