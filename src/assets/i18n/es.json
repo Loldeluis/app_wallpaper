@@ -18,5 +18,13 @@
     "PASSWORD": "Contraseña",
     "BUTTON": "Registrarse",
     "HAVE_ACCOUNT": "¿Ya tienes cuenta? Inicia sesión"
+  },
+  "PROFILE": {
+    "TITLE": "Perfil",
+    "NEW_NAME": "Nuevo nombre",
+    "NEW_PASSWORD": "Nueva contraseña",
+    "BUTTON": "Actualizar Perfil",
+    "BACK": "Volver atrás"
   }
+
 }

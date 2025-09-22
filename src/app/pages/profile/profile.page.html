@@ -1,23 +1,43 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Perfil</ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{ 'PROFILE.TITLE' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <app-toggle-translate></app-toggle-translate>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
-    <ion-item>
-      <ion-label position="floating">Nuevo nombre</ion-label>
-      <ion-input type="text" formControlName="displayName"></ion-input>
-    </ion-item>
+  <app-card>
+    <div class="profile-container">
+      <h2>{{ 'PROFILE.TITLE' | translate }}</h2>
 
-    <ion-item>
-      <ion-label position="floating">Nueva contraseña</ion-label>
-      <ion-input type="password" formControlName="password"></ion-input>
-    </ion-item>
+      <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+        <app-input
+          formControlName="displayName"
+          placeholder="{{ 'PROFILE.NEW_NAME' | translate }}">
+        </app-input>
 
-    <ion-button expand="block" type="submit" [disabled]="profileForm.invalid">
-      Actualizar Perfil
-    </ion-button>
-  </form>
+        <app-input
+          formControlName="password"
+          type="password"
+          placeholder="{{ 'PROFILE.NEW_PASSWORD' | translate }}">
+        </app-input>
+
+        <div class="btn-container">
+          <app-button
+            type="submit"
+            [disabled]="profileForm.invalid">
+            {{ 'PROFILE.BUTTON' | translate }}
+          </app-button>
+        </div>
+      </form>
+
+      <div class="links-container">
+        <app-button routerLink="/home">
+          {{ 'PROFILE.BACK' | translate }}
+        </app-button>
+      </div>
+    </div>
+  </app-card>
 </ion-content>
