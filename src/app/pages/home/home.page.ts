@@ -5,6 +5,11 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth';// ajusta ruta si es necesario
 import { SupabaseService } from 'src/app/core/services/supabase.service';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { ToastController } from '@ionic/angular'; // <- import
+import myCustom from 'src/app/plugins/MyCustomPlugin'; // ajusta ruta si es necesario
+
+// Importa el plugin personalizado
+import MyCustom from 'src/app/plugins/MyCustomPlugin';
 
 @Component({
   standalone: false,
@@ -21,6 +26,7 @@ export class HomePage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private supabaseService: SupabaseService,
+    private toastCtrl: ToastController
   ) {
     this.user$ = this.authService.user$;
   }
@@ -36,6 +42,32 @@ export class HomePage implements OnInit {
       }
     });
   }
+
+async setAsWallpaper(url: string, type: 'home' | 'lock' = 'home') {
+  try {
+    const toastLoading = await this.toastCtrl.create({ message: 'Aplicando fondo...', duration: 2000 });
+    toastLoading.present();
+
+    const res = await MyCustom.setWallpaper({ url, type });
+    console.log('Plugin result:', res);
+
+    const toast = await this.toastCtrl.create({
+      message: res?.message || 'Hecho',
+      duration: 1500,
+      position: 'bottom'
+    });
+    await toast.present();
+  } catch (err: any) {
+    console.error('Error plugin:', err);
+    const toast = await this.toastCtrl.create({
+      message: 'Error al aplicar fondo: ' + (err?.message || err),
+      duration: 2500,
+      position: 'bottom'
+    });
+    await toast.present();
+  }
+}
+
 
   // logout ya lo tenías; usa el método modular
   logout() {
