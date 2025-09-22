@@ -11,18 +11,29 @@ import { ToastController } from '@ionic/angular';
 })
 export class ProfilePage implements OnInit {
   profileForm!: FormGroup;
+  displayName: string | null = null; // 🔹 Solo el nombre desde Firestore
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private toastCtrl: ToastController
-    
   ) {}
 
   ngOnInit() {
     this.profileForm = this.fb.group({
       displayName: ['', Validators.required],
       password: ['', [Validators.minLength(6)]]
+    });
+
+    // 🔹 Suscribirse al usuario actual
+    this.authService.currentUser$.subscribe(async user => {
+      if (user) {
+        // Traemos únicamente el campo "name" desde Firestore
+        const userDoc = await this.authService.getUserDocOnce(user.uid);
+        this.displayName = userDoc?.['name'] ?? 'Sin nombre';
+      } else {
+        this.displayName = null;
+      }
     });
   }
 

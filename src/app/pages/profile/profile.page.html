@@ -10,7 +10,12 @@
 <ion-content class="ion-padding">
   <app-card>
     <div class="profile-container">
+      <div class="header">
+         <span *ngIf="displayName">👤 {{ displayName }}</span>
+         <span *ngIf="!displayName">No autenticado</span>
+        </div>
       <h2>{{ 'PROFILE.TITLE' | translate }}</h2>
+      
 
       <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
         <app-input
