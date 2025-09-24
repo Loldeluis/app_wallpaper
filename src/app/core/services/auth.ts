@@ -165,10 +165,42 @@ export class AuthService {
   async updateUserPassword(newPassword: string): Promise<void> {
     const current = this.auth.currentUser;
     if (!current) {
-      throw new Error('No hay usuario autenticado');
+      throw new Error('❌ No hay usuario autenticado en Firebase');
     }
-    await updatePassword(current, newPassword);
+
+    // -------------------------------
+    // 1) Cambiar en Firebase
+    // -------------------------------
+    try {
+      await updatePassword(current, newPassword);
+      console.log('✅ Contraseña actualizada en Firebase');
+    } catch (err: any) {
+      console.error('❌ Error al actualizar en Firebase:', err.message);
+      throw new Error(`Error en Firebase: ${err.message}`);
+    }
+
+    // -------------------------------
+    // 2) Cambiar en Supabase
+    // -------------------------------
+    try {
+      const { error } = await this.supabase.client.auth.updateUser({
+        password: newPassword,
+      });
+
+      if (error) {
+        console.error('❌ Error al actualizar en Supabase:', error.message);
+        // ⚠️ Aquí decides: lanzar error o continuar
+        throw new Error(`Error en Supabase: ${error.message}`);
+      }
+
+      console.log('✅ Contraseña actualizada en Supabase');
+    } catch (err: any) {
+      // ⚠️ Si quieres "rollback", aquí podrías volver a poner la contraseña anterior en Firebase
+      // pero recuerda que Firebase no ofrece rollback automático, habría que pedir la vieja contraseña.
+      throw err;
+    }
   }
+
 
     // ----------------------
   // Wallpapers
